@@ -1,5 +1,6 @@
 import StreamZip from "node-stream-zip";
 import { temporaryFileTask } from "tempy";
+import path from "node:path";
 
 function flattenStrings(obj, doNotCopy) {
     if (!doNotCopy) obj = JSON.parse(JSON.stringify(obj));
@@ -54,16 +55,18 @@ export class Mogrt {
 
     async extractTo(toPath) {
         const zip = this._getZip();
+        const entries = [];
         await temporaryFileTask(async (tempPath) => {
             await zip.extract('project.aegraphic', tempPath);
             const aegraphicZip = new StreamZip.async({ file: tempPath });
+            aegraphicZip.on('entry', entry => entries.push(path.join(toPath, entry.name)));
             await aegraphicZip.extract(null, toPath);
             await Promise.all([
                 aegraphicZip.close(),
                 zip.close()
             ]);
         });
-        return true;
+        return entries;
     }
 
     async getManifest(flattened) {

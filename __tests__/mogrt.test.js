@@ -49,10 +49,12 @@ describe('after effects template', () => {
 
     test('extracts file', async () => {
         await mogrt.init();
+        let filenames;
         await temporaryDirectoryTask(async tmpPath => {
-            await mogrt.extractTo(tmpPath);
+            filenames = await mogrt.extractTo(tmpPath);
             expect(fs.existsSync(path.join(tmpPath, 'test.aep'))).toBe(true);
         });
+        expect(filenames).toHaveLength(2);
     })
 
     test('extracts Essential Graphics fields', async () => {
