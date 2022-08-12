@@ -1,0 +1,21 @@
+{
+  "name": "mogrt",
+  "version": "0.0.1",
+  "description": "",
+  "main": "mogrt.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules ./node_modules/.bin/jest",
+    "coverage": "node --experimental-vm-modules ./node_modules/.bin/jest --coverage",
+    "run": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "node-stream-zip": "^1.15.0",
+    "tempy": "^3.0.0"
+  },
+  "devDependencies": {
+    "jest": "^28.1.3"
+  }
+}
